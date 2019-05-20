@@ -13,6 +13,6 @@ export default class SeedScene extends Group {
   }
 
   update(timeStamp) {
-    this.rotation.y = timeStamp / 50000;
+    this.rotation.y = timeStamp / 80000;
   }
 }

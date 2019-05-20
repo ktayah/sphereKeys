@@ -1,4 +1,4 @@
-# Three Seed
+# Earth Piano
 
 Three.js starter project boilerplate bundled with Webpack.
 
