@@ -1,5 +1,6 @@
 const path = require('path');
 const pkg = require('./package.json');
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const buildPath = './build/';
 
@@ -36,6 +37,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({'title': 'three-seed project'})
+    new HtmlWebpackPlugin({title: 'Earth Piano'})
   ]
 }
