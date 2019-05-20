@@ -42,6 +42,7 @@ controls.update();
 // render loop
 const onAnimationFrameHandler = (timeStamp) => {
   renderer.render(scene, camera);
+  seedScene.update && seedScene.update(timeStamp);
   controls.update();
   window.requestAnimationFrame(onAnimationFrameHandler);
 }
