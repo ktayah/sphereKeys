@@ -19,5 +19,6 @@ export default class Earth extends Group {
     }, (error) => {
       console.error('Error:', error);
     });
+    console.log('this', this);
   }
 }

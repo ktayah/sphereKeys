@@ -38,7 +38,7 @@ controls.screenSpacePanning = false;
 controls.minDistance = 500;
 controls.maxDistance = 1000
 
-controls.maxPolarAngle = Math.PI/2;
+controls.maxPolarAngle = Math.PI;
 controls.update();
 
 // render loop
