@@ -10,9 +10,10 @@
 import { WebGLRenderer, PerspectiveCamera, Scene, Vector3 } from 'three';
 import OrbitControls from 'three-orbitcontrols'
 import SeedScene from './objects/Scene.js';
+import config from './config.json';
 
-const scene = new Scene();
-const camera = new PerspectiveCamera();
+const scene = new Scene()
+const camera = new PerspectiveCamera(config.fov, window.innerWidth/window.innerHeight, 1, 1000);
 const renderer = new WebGLRenderer({antialias: true});
 const seedScene = new SeedScene();
 
@@ -20,12 +21,13 @@ const seedScene = new SeedScene();
 scene.add(seedScene);
 
 // camera
-camera.position.set(6,3,-600);
+camera.position.set(0, 0, -10000);
 camera.lookAt(new Vector3(0,0,0));
 
 // renderer
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x171549, 1);
+renderer.gammaOutput = true;
 
 // controls
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -54,10 +56,15 @@ const windowResizeHanlder = () => {
   renderer.setSize(innerWidth, innerHeight);
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
-};
+}
 windowResizeHanlder();
 window.addEventListener('resize', windowResizeHanlder);
 
 // dom
 document.body.style.margin = 0;
 document.body.appendChild( renderer.domElement );
+const node = document.createElement("div");
+const p = document.createElement("p");
+node.appendChild(p);
+
+document.body.appendChild(node);

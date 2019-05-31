@@ -1,0 +1,50 @@
+{
+    "title": "Earth",
+    "camera": {
+        "fov": 75
+    },
+    "earthRadius": 0,
+    "countries": [
+        {
+            "country": "Australia",
+            "instrument": "Didgeridoo",
+            "lat": -25,
+            "long": -135       
+        }, {
+            "country": "USA",
+            "instrument": "Electric Guitar",
+            "lat": 39.381266,
+            "long": -97.922211
+        }, {
+            "country": "Albania",
+            "instrument": "Ciftelia",
+            "lat": 41,
+            "long": 20
+        }, {
+            "country": "Ecuador",
+            "instrument": "Rondador",
+            "lat": -1.46667,
+            "long": -78.81667
+        }, {
+            "country": "Ireland",
+            "instrument": "Bag Pipes",
+            "lat": 53,
+            "long": -8
+        }, {
+            "country": "Korea",
+            "instrument": "Gayageum",
+            "lat": 35.536236,
+            "long": 128.168944
+        }, {
+            "country": "Mexico",
+            "instrument": "Marimba",
+            "lat": 19.432608,
+            "long": 99.133209
+        }, {
+            "country": "Russia",
+            "instrument": "Garmon",
+            "lat": 55.751770,
+            "long": 37.608868
+        }
+    ]
+}
