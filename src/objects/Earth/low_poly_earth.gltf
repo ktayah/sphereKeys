@@ -56,7 +56,16 @@
                 0
             ],
             "name" : "earth",
-            "pbrMetallicRoughness" : {}
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.12743748724460602,
+                    0.7991031408309937,
+                    0.10461655259132385,
+                    1
+                ],
+                "metallicFactor" : 1,
+                "roughnessFactor" : 1
+            }
         }
     ],
     "meshes" : [
