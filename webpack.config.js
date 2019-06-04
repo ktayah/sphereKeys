@@ -2,6 +2,8 @@ const path = require('path');
 const pkg = require('./package.json');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const buildPath = './build/';
+const config = require('./src/config.json');
+console.log(config);
 
 module.exports = {
   entry: ['./src/entry.js'],

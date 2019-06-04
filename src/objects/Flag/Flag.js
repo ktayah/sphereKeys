@@ -1,19 +1,16 @@
-import { Group } from 'three';
+import { Group, Vector3 } from 'three';
 import GLTFLoader from 'three-gltf-loader';
 import MODEL from './flag.gltf';
 import config from '../../config.json';
 
 export default class Flag extends Group {
-  constructor() {
+  constructor(lat, long) {
     super();
     
-    const loader = new GLTFLoader();
-
     this.name = 'flag';
-    this.receiveShadows = false;
-    this.position.set(500, 0, 0);
-    this.scale.set(2, 2, 2);
-
+    const location = this.spherePositionSet(lat, long);
+    
+    const loader = new GLTFLoader();
     loader.load(MODEL, (gltf) => {
       this.add(gltf.scene);
     }, (xhr) => {
@@ -21,6 +18,11 @@ export default class Flag extends Group {
     }, (error) => {
       console.error('Error:', error);
     });
+    
+    this.scale.set(2, 2, 2);
+    this.lookAt(new Vector3(location.x, location.y, location.z));
+    this.rotateX(0.5*Math.PI);
+    this.position.set(location.x, location.y, location.z);
   }
 
   /**
@@ -30,16 +32,12 @@ export default class Flag extends Group {
    * @returns { Object } x, y, z of flag
    */
   spherePositionSet(lat, long) {
-    // const lat = 90 - (Math.acos(y / radius)) * 180 / Math.PI;
-    // const lon = ((270 + (Math.atan2(x , z)) * 180 / Math.PI) % 360) -180;
-    const phi = null;
-    const theta = null;
-    const rho = null;
-    const radius = config.earthRadius;
-    const x = math.cos(phi) * math.cos(theta) * rho;
-    const y = math.cos(phi) * math.sin(theta) * rho;
-    const z = math.sin(phi) * rho;
-
+    const radius = 350; //config.earthRadius;
+    lat *= Math.PI/180;
+    long *= Math.PI/180;
+    const x = radius * Math.cos(lat) * Math.cos(long);
+    const y = radius * Math.cos(lat) * Math.sin(long);
+    const z = radius * Math.sin(lat);
     return {x, y, z};
   }
 }
