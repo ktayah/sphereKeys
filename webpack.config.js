@@ -17,7 +17,15 @@ module.exports = {
         test: /\.js$/,
         use: 'babel-loader',
         exclude: path.resolve(__dirname, './node_modules/')
-      },{
+      }, {
+        test: /\.(html)$/,
+        use: {
+          loader: 'html-loader',
+          options: {
+            attrs: [':data-src']
+          }
+        }
+      }, {
         test: /\.(jpe?g|png|gif|svg|tga|gltf|babylon|mtl|pcb|pcd|prwm|obj|mat|mp3|ogg)$/i,
         use: 'file-loader',
         exclude: path.resolve(__dirname, './node_modules/')
@@ -36,6 +44,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({title: 'Earth Piano'})
+    new HtmlWebpackPlugin({
+      title: 'Earth Piano',
+      template: './src/entry.html'
+    })
   ]
 }

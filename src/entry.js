@@ -7,13 +7,13 @@
  * 
  */
 'use strict';
-import { WebGLRenderer, PerspectiveCamera, Scene, Vector3, CameraHelper, AxesHelper, Vector2, Raycaster, Projector } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Scene, Vector3, Vector2, Raycaster } from 'three';
 import OrbitControls from 'three-orbitcontrols'
 import SeedScene from './objects/Scene.js';
 
 const scene = new Scene()
-const camera = new PerspectiveCamera(/*config.camera.fov*/70, window.innerWidth/window.innerHeight, 1, 10000);
-const renderer = new WebGLRenderer({antialias: true});
+const camera = new PerspectiveCamera(70, 2, 1, 10000); // No reason to set aspect here because it will be set later
+const renderer = new WebGLRenderer({antialias: true, canvas: document.querySelector('canvas')});
 const seedScene = new SeedScene();
 const raycaster = new Raycaster();
 const mouse = new Vector2();
@@ -26,7 +26,7 @@ camera.position.set(0, 0, -1000);
 camera.lookAt(new Vector3(0,0,0));
 
 // renderer
-renderer.setPixelRatio(window.devicePixelRatio);
+// renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x171549, 1);
 renderer.gammaOutput = true;
 renderer.gammaFactor = 2.2;
@@ -43,11 +43,29 @@ controls.maxDistance = 1000
 controls.maxPolarAngle = Math.PI;
 controls.update();
 
+//canvasResize
+const resizeCanvasToDisplaySize = () => {
+  const canvas = renderer.domElement;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+  if (canvas.width !== width || canvas.height !== height) {
+    // you must pass false here or three.js sadly fights the browser
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    // renderer.setPixelRatio(window.devicePixelRatio);
+
+    // set render target sizes here
+  }
+}
+
+
 // render loop
-const onAnimationFrameHandler = (timeStamp) => {
+const animate = (timeStamp) => {
   seedScene.update && seedScene.update(timeStamp);
   controls.update();
   camera.updateProjectionMatrix();
+  resizeCanvasToDisplaySize();
 
   // raycaster.setFromCamera(mouse, camera);
   // let rayItems = raycaster.intersectObjects(scene.children[0].children);
@@ -55,11 +73,10 @@ const onAnimationFrameHandler = (timeStamp) => {
   // if (raycontains(rayItems, "flag")) {
   //   console.log('Found Flag');
   // }
-
   renderer.render(scene, camera);
-  window.requestAnimationFrame(onAnimationFrameHandler);
+  window.requestAnimationFrame(animate);
 }
-window.requestAnimationFrame(onAnimationFrameHandler);
+window.requestAnimationFrame(animate);
 
 // resize
 const windowResizeHandler = () => { 
@@ -81,8 +98,9 @@ const onDocumentMouseMove = (event) => {
 document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
 // dom
-document.body.style.margin = 0;
-document.body.appendChild( renderer.domElement );
+// document.body.appendChild( renderer.domElement );
+// document.body.innerHTML(entryHTML);
+// document.body.style.margin = 0;
 
 const raycontains = function(rayIntersects, meshName) {
   let rayItemName;
