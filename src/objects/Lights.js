@@ -1,9 +1,10 @@
-import { Group, SpotLight, PointLight, AmbientLight, HemisphereLight, SpotLightHelper } from 'three';
+import { Group, SpotLight, PointLight, AmbientLight, HemisphereLight } from 'three';
 
 export default class BasicLights extends Group {
   constructor(...args) {
     super(...args);
-
+    
+    this.name = 'lights';
     const point = new PointLight(0xFFFFFF, 1, 0, 1);
     const pointRear = point.clone();
     const pointLeft = point.clone();
@@ -24,6 +25,7 @@ export default class BasicLights extends Group {
     pointRear.position.set(-1000, 0, 0);
     pointLeft.position.set(0, 1000, -1000);
     pointRight.position.set(1000, 0, -1000);
+    
     this.add(ambi, hemi, point, pointRear, pointLeft, pointRight);
   }
 }

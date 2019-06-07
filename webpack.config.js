@@ -2,17 +2,15 @@ const path = require('path');
 const pkg = require('./package.json');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const buildPath = './build/';
-const config = require('./src/config.json');
-console.log(config);
 
 module.exports = {
   entry: ['./src/entry.js'],
+  target: 'web',
+  devtool: 'source-map',
   output: {
     path: path.join(__dirname, buildPath),
     filename: '[name].[hash].js'
   },
-  target: 'web',
-  devtool: 'source-map',
   module: {
     rules: [
       {

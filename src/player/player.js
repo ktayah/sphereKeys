@@ -1,16 +1,17 @@
-import midiPlayer from 'midi-player-js'
+import Soundfont from 'soundfont-player';
 
 export default class Player {
-    constructor(...args) {
-        super(...args);
-
-        this.Player = new midiPlayer.Player(function(event) {
-            console.log(event);
-        });
+    constructor(instrument = 'acoustic_grand_piano') {
+        this.instrument = instrument;
     }
 
-    play(soundFile) {
-        this.Player.loadFile(`./${soundFile}.midi`);
-        this.Player.play();
+    /**
+     * Plays a chord progression based on passed notes
+     * @param {Array} note Takes in a note which to play
+     */
+    play(note) {
+        Soundfont.instrument(new AudioContext(), this.instrument).then(function(piano) {
+            piano.play(note);
+        });
     }
 }

@@ -1,13 +1,14 @@
 {
-  "name": "three-seed",
-  "version": "0.3.2",
-  "description": "Three.js starter project boilerplate bundled with webpack",
+  "name": "earth-piano",
+  "version": "0.1.0",
+  "description": "A 3D Model of Earth with instruments of the world that can be played across various chord progressions.",
   "keywords": [
     "webgl",
-    "boilerplate",
     "three.js",
     "es6",
-    "webpack"
+    "webpack",
+    "midi",
+    "soundfont-player"
   ],
   "scripts": {
     "start": "webpack-dev-server --mode development",
@@ -15,15 +16,12 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
-    "midi-player-js": "^2.0.5",
-    "three": "^0.98.0",
-    "three-fbx-loader": "^1.0.3",
+    "soundfont-player": "^0.11.0",
+    "three": "^0.105.2",
     "three-gltf-loader": "^1.104.0",
-    "three-obj-loader": "^1.1.3",
-    "three-obj-mtl-loader": "^1.0.3",
     "three-orbitcontrols": "^2.102.1",
-    "webpack": "^4.32.2",
-    "webpack-cli": "^3.1.2"
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",

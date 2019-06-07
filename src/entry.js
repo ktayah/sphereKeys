@@ -7,20 +7,16 @@
  * 
  */
 'use strict';
-import { WebGLRenderer, PerspectiveCamera, Scene, Vector3, CameraHelper, AxesHelper, Vector2, Raycaster } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Scene, Vector3, CameraHelper, AxesHelper, Vector2, Raycaster, Projector } from 'three';
 import OrbitControls from 'three-orbitcontrols'
 import SeedScene from './objects/Scene.js';
-// import config from './config';
-
-// console.log('Test:', config);
 
 const scene = new Scene()
 const camera = new PerspectiveCamera(/*config.camera.fov*/70, window.innerWidth/window.innerHeight, 1, 10000);
 const renderer = new WebGLRenderer({antialias: true});
 const seedScene = new SeedScene();
 const raycaster = new Raycaster();
-const axesHelper = new AxesHelper(1000);
-scene.add(axesHelper);
+const mouse = new Vector2();
 
 // scene
 scene.add(seedScene);
@@ -49,15 +45,18 @@ controls.update();
 
 // render loop
 const onAnimationFrameHandler = (timeStamp) => {
-  renderer.render(scene, camera);
   seedScene.update && seedScene.update(timeStamp);
   controls.update();
-  const rayItems = raycaster.intersectObjects(scene.children);
-  console.log(rayItems);
-  raycaster.setFromCamera(mouse, camera); //ADDED
-  if (raycontains(rayItems, "flag")) {
-    console.log('Found Flag');
-  }
+  camera.updateProjectionMatrix();
+
+  // raycaster.setFromCamera(mouse, camera);
+  // let rayItems = raycaster.intersectObjects(scene.children[0].children);
+  // console.log(rayItems);
+  // if (raycontains(rayItems, "flag")) {
+  //   console.log('Found Flag');
+  // }
+
+  renderer.render(scene, camera);
   window.requestAnimationFrame(onAnimationFrameHandler);
 }
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -73,7 +72,6 @@ windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler);
 
 // mouseEvent
-const mouse = new Vector2();
 const onDocumentMouseMove = (event) => {
   event.preventDefault();
 
@@ -85,18 +83,14 @@ document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 // dom
 document.body.style.margin = 0;
 document.body.appendChild( renderer.domElement );
-const node = document.createElement("div");
-const p = document.createElement("p");
-node.appendChild(p);
-
-document.body.appendChild(node);
 
 const raycontains = function(rayIntersects, meshName) {
-  var rayItemName;
-  var meshInRay = false;
+  let rayItemName;
+  let meshInRay = false;
   rayIntersects.every((item,i) => {
     rayItemName = item.object.name;
     if (rayItemName == meshName) {
+      console.log(rayItemName);
       meshInRay = true;
       return false;
     } else {

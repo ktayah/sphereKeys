@@ -12,7 +12,7 @@ export default class SeedScene extends Group {
     const flag = new Flag(5, 65);
     const lights = new BasicLights();
 
-    this.add( earth, flag, flag2, flag3, flag4, flag5, lights);
+    this.add(earth, flag, lights);
   }
 
   update(timeStamp) {
