@@ -1,0 +1,48 @@
+html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  body { 
+    margin: auto;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .outer {
+  }
+  .frame { 
+    display: flex;
+    height: 100%;
+  }
+  #scene{
+    width: 100%;
+  }
+  #editor {
+    display: table;
+    overflow: visible;
+    width: auto;
+    max-width: 30%;
+    font-family: monospace;
+    padding: 2em;
+    margin: 5em auto;
+    margin-right: 10em;
+    background: #444;
+    color: white;
+    border-radius: 10px;
+  }
+  #editor-background {
+    background-color: #171549;
+  }  
+  .button {
+    background-color: #555555;
+    font-size: 24px;
+    padding: 15px;
+  }
+  .button:hover {
+    background-color: #cccbcb;
+  }
+  canvas { 
+    width: 100%;
+    height: 100%;
+  }

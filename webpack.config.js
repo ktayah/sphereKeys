@@ -26,14 +26,17 @@ module.exports = {
           }
         }
       }, {
+        test:/\.css$/,
+        use:['style-loader','css-loader']
+      }, {
         test: /\.(jpe?g|png|gif|svg|tga|gltf|babylon|mtl|pcb|pcd|prwm|obj|mat|mp3|ogg)$/i,
         use: 'file-loader',
         exclude: path.resolve(__dirname, './node_modules/')
-      },{
+      }, {
         test: /\.(vert|frag|glsl|shader|txt)$/i,
         use: 'raw-loader',
         exclude: path.resolve(__dirname, './node_modules/')
-      },{
+      }, {
         type: 'javascript/auto',
         test: /\.(json)/,
         exclude: path.resolve(__dirname, './node_modules/'),

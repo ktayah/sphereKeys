@@ -10,6 +10,7 @@
 import { WebGLRenderer, PerspectiveCamera, Scene, Vector3, Vector2, Raycaster } from 'three';
 import OrbitControls from 'three-orbitcontrols'
 import SeedScene from './objects/Scene.js';
+import './styles/entry.css';
 
 const scene = new Scene()
 const camera = new PerspectiveCamera(70, 2, 1, 10000); // No reason to set aspect here because it will be set later
@@ -22,11 +23,10 @@ const mouse = new Vector2();
 scene.add(seedScene);
 
 // camera
-camera.position.set(0, 0, -1000);
+camera.position.set(0, 0, -800);
 camera.lookAt(new Vector3(0,0,0));
 
 // renderer
-// renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x171549, 1);
 renderer.gammaOutput = true;
 renderer.gammaFactor = 2.2;
@@ -53,12 +53,9 @@ const resizeCanvasToDisplaySize = () => {
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    // renderer.setPixelRatio(window.devicePixelRatio);
-
-    // set render target sizes here
+    return canvas;
   }
 }
-
 
 // render loop
 const animate = (timeStamp) => {
@@ -80,7 +77,7 @@ window.requestAnimationFrame(animate);
 
 // resize
 const windowResizeHandler = () => { 
-  const { innerHeight, innerWidth } = window;
+  const { innerHeight, innerWidth } = resizeCanvasToDisplaySize();
   renderer.setSize(innerWidth, innerHeight);
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
@@ -97,15 +94,10 @@ const onDocumentMouseMove = (event) => {
 }
 document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
-// dom
-// document.body.appendChild( renderer.domElement );
-// document.body.innerHTML(entryHTML);
-// document.body.style.margin = 0;
-
 const raycontains = function(rayIntersects, meshName) {
   let rayItemName;
   let meshInRay = false;
-  rayIntersects.every((item,i) => {
+  rayIntersects.every((item, i) => {
     rayItemName = item.object.name;
     if (rayItemName == meshName) {
       console.log(rayItemName);

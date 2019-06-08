@@ -1,13 +1,12 @@
 import { Group } from 'three';
 import GLTFLoader from 'three-gltf-loader';
-import MODEL from './low_poly_earth.gltf';
+import MODEL from './earth.gltf';
 
 export default class Earth extends Group {
   constructor() {
     super();
     
     const loader = new GLTFLoader();
-
     this.name = 'earth';
     
     loader.load(MODEL, (gltf) => {
