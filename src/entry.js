@@ -7,14 +7,12 @@
  * 
  */
 'use strict';
-import { WebGLRenderer, PerspectiveCamera, Scene, Vector3, Vector2, Raycaster } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Scene, Vector3, Vector2, Raycaster, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols'
 import SeedScene from './objects/Scene.js';
 import Player from './player/Player.js';
 import config from './config.json';
 import './styles/entry.css';
-
-console.log(config);
 
 const scene = new Scene()
 const camera = new PerspectiveCamera(70, 2, 1, 10000); // No reason to set aspect here because it will be set later
@@ -27,6 +25,7 @@ let clicked;
 
 // scene
 scene.add(seedScene);
+scene.add(new AxesHelper(1000));
 
 // camera
 camera.position.set(0, 0, -800);

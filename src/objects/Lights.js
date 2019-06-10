@@ -7,6 +7,7 @@ export default class BasicLights extends Group {
     this.name = 'lights';
     const point = new PointLight(0xFFFFFF, 1, 0, 1);
     const pointRear = point.clone();
+    const pointRearBottom = point.clone();
     const pointLeft = point.clone();
     const pointRight = point.clone();
     const spot = new SpotLight(0xFFFFFF, 0.8, 7, 0.8, 1, 1);
@@ -22,10 +23,11 @@ export default class BasicLights extends Group {
     // pointRight.position.set(0, 10000, 0);
     
     point.position.set(1000, 0, 0);
-    pointRear.position.set(-1000, 0, 0);
-    pointLeft.position.set(0, 1000, -1000);
-    pointRight.position.set(1000, 0, -1000);
+    pointRear.position.set(0, 0, -1000);
+    pointRearBottom.position.set(0, -1000, 1000);
+    pointLeft.position.set(0, 1000, 1000);
+    pointRight.position.set(-1000, 0, -1000);
     
-    this.add(ambi, hemi, point, pointRear, pointLeft, pointRight);
+    this.add(ambi, hemi, point, pointRear, pointRearBottom, pointLeft, pointRight);
   }
 }
