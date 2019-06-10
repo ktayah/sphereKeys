@@ -1,8 +1,8 @@
-import { Group } from 'three';
+import { Object3D } from 'three';
 import GLTFLoader from 'three-gltf-loader';
 import MODEL from './earth.gltf';
 
-export default class Earth extends Group {
+export default class Earth extends Object3D {
   constructor() {
     super();
     

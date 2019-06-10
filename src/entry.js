@@ -10,7 +10,11 @@
 import { WebGLRenderer, PerspectiveCamera, Scene, Vector3, Vector2, Raycaster } from 'three';
 import OrbitControls from 'three-orbitcontrols'
 import SeedScene from './objects/Scene.js';
+import Player from './player/Player.js';
+import config from './config.json';
 import './styles/entry.css';
+
+console.log(config);
 
 const scene = new Scene()
 const camera = new PerspectiveCamera(70, 2, 1, 10000); // No reason to set aspect here because it will be set later
@@ -18,6 +22,8 @@ const renderer = new WebGLRenderer({antialias: true, canvas: document.querySelec
 const seedScene = new SeedScene();
 const raycaster = new Raycaster();
 const mouse = new Vector2();
+const canvas = renderer.domElement;
+let clicked;
 
 // scene
 scene.add(seedScene);
@@ -32,7 +38,7 @@ renderer.gammaOutput = true;
 renderer.gammaFactor = 2.2;
 
 // controls
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.dampingFactor = 0.25
 controls.screenSpacePanning = false;
@@ -43,9 +49,8 @@ controls.maxDistance = 1000
 controls.maxPolarAngle = Math.PI;
 controls.update();
 
-//canvasResize
+// canvasResize
 const resizeCanvasToDisplaySize = () => {
-  const canvas = renderer.domElement;
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
   if (canvas.width !== width || canvas.height !== height) {
@@ -53,8 +58,8 @@ const resizeCanvasToDisplaySize = () => {
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    return canvas;
   }
+  return { height, width }
 }
 
 // render loop
@@ -63,13 +68,7 @@ const animate = (timeStamp) => {
   controls.update();
   camera.updateProjectionMatrix();
   resizeCanvasToDisplaySize();
-
-  // raycaster.setFromCamera(mouse, camera);
-  // let rayItems = raycaster.intersectObjects(scene.children[0].children);
-  // console.log(rayItems);
-  // if (raycontains(rayItems, "flag")) {
-  //   console.log('Found Flag');
-  // }
+  if (clicked) raycast();
   renderer.render(scene, camera);
   window.requestAnimationFrame(animate);
 }
@@ -77,9 +76,9 @@ window.requestAnimationFrame(animate);
 
 // resize
 const windowResizeHandler = () => { 
-  const { innerHeight, innerWidth } = resizeCanvasToDisplaySize();
-  renderer.setSize(innerWidth, innerHeight);
-  camera.aspect = innerWidth / innerHeight;
+  const { height, width } = resizeCanvasToDisplaySize();
+  renderer.setSize(width, height);
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
 }
 windowResizeHandler();
@@ -88,24 +87,66 @@ window.addEventListener('resize', windowResizeHandler);
 // mouseEvent
 const onDocumentMouseMove = (event) => {
   event.preventDefault();
-
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = (event.clientY / window.innerHeight) * 2 + 1;
+  const { height, width } = resizeCanvasToDisplaySize(); 
+  mouse.x = (event.clientX / width) * 2 - 1;
+  mouse.y = - (event.clientY / height) * 2 + 1;
 }
-document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+canvas.addEventListener( 'mousemove', onDocumentMouseMove, false);
+canvas.addEventListener('mousedown', () => {
+  clicked = true;
+});
+canvas.addEventListener('mouseup', () => {
+  clicked = false;
+});
+
+// buttonEvents
+let button;
+document.getElementById('b0').addEventListener("click", function() {
+  button = 'I-IV-V';
+});
+document.getElementById('b1').addEventListener("click", function() {
+  button = 'I-IV-I-V';
+});
+document.getElementById('b2').addEventListener("click", function() {
+  button = 'I-V-vi-IV';
+});
+document.getElementById('b3').addEventListener("click", function() {
+  button = 'I-vi-IV-V';
+});
+
+// racasting
+const raycast = () => {
+  raycaster.setFromCamera(mouse, camera);
+  let rayItems = raycaster.intersectObjects(seedScene.children, true);
+  if (rayItems.length != 0 && button != null) {
+    const tube = raycontains(rayItems, "Tube001");
+    const box = raycontains(rayItems, "Box001");
+    if (tube.meshInRay || box.meshInRay) {
+      const obj = tube.meshInRay ? tube.itemInRay.object : box.itemInRay.object;
+      const country = obj.parent.parent.country;
+      const instrument = obj.parent.parent.instrument;
+      const music = new Player(instrument);
+      const randomProgression = Math.floor(Math.random()*config.progressions[button].length)
+      const progression = config.progressions[button][randomProgression];
+      console.log(country, instrument, progression);
+      music.playProgression(progression);
+    }
+  }
+}
 
 const raycontains = function(rayIntersects, meshName) {
   let rayItemName;
   let meshInRay = false;
+  let itemInRay;
   rayIntersects.every((item, i) => {
     rayItemName = item.object.name;
     if (rayItemName == meshName) {
-      console.log(rayItemName);
       meshInRay = true;
+      itemInRay = item;
       return false;
     } else {
       return true;
     }
   });
-  return meshInRay;
+  return { itemInRay, meshInRay };
 }

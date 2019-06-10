@@ -41,9 +41,9 @@ module.exports = {
         test: /\.(json)/,
         exclude: path.resolve(__dirname, './node_modules/'),
         use: [{
-          loader: 'file-loader'
+          loader: 'json-loader'
         }],
-      }
+      }, 
     ]
   },
   plugins: [

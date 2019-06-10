@@ -7,34 +7,40 @@
     "countries": [
         {
             "country": "Brazil",
-            "instrument": "",
+            "instrument": "banjo",
             "lat": 39, 
             "long":-30
         }, {
             "country": "USA",
-            "instrument": "Electric Guitar",
+            "instrument": "acoustic_guitar_steel",
             "lat": 105,
             "long": -30
         }, {
             "country": "India",
-            "instrument": "Sitar",
+            "instrument": "sitar",
             "lat": -95,
             "long": -60
         }, {
             "country": "Italy",
-            "instrument": "Ocarina",
+            "instrument": "ocarina",
             "lat": -15,
             "long": 50
         }, {
             "country": "Japan",
-            "instrument": "Koto",
+            "instrument": "koto",
             "lat": -27,
             "long": -180
         }, {
             "country": "Ireland",
-            "instrument": "Bag Pipes",
+            "instrument": "bagpipe",
             "lat": 5,
             "long": 65
         }
-    ]
+    ],
+    "progressions": {
+        "I-IV-V": [["AS3", "D4", "E4"], ["F4", "AS3", "C4"]],
+        "I-IV-I-V": [["G4", "C4", "G4", "D4"], ["C4", "F4", "C4", "G4"]],
+        "I-V-vi-IV": [["A3", "D4", "E4"], ["B3", "E4", "F4"]],
+        "I-vi-IV-V":[["A3", "D4", "E4"], ["B3", "E4", "F4"]]
+    }
 }

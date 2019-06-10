@@ -1,13 +1,14 @@
-import { Group, Vector3 } from 'three';
+import { Vector3, Object3D } from 'three';
 import GLTFLoader from 'three-gltf-loader';
 import MODEL from './flag.gltf';
 import config from '../../config.json';
 
-export default class Flag extends Group {
-  constructor(lat, long) {
+export default class Flag extends Object3D {
+  constructor(lat, long, country, instrument) {
     super();
-    
     this.name = 'flag';
+    this.country = country;
+    this.instrument = instrument;
     const location = this.spherePositionSet(lat, long);
     
     const loader = new GLTFLoader();
