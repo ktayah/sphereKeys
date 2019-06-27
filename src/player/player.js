@@ -5,11 +5,9 @@ export default class Player {
         this.instrument = instrument;
         this.ac = new AudioContext();
     }
-
     setInstrument(instrument) {
         this.instrument = instrument;
     }
-
     /**
      * Plays a note
      * @param {String} note Takes in note in string form to play ex. A4, C5

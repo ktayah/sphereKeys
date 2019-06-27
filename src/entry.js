@@ -27,7 +27,7 @@ let clicked;
 scene.add(seedScene);
 
 // camera
-camera.position.set(0, 0, -800);
+camera.position.set(0, 0, 850);
 camera.lookAt(new Vector3(0,0,0));
 
 // renderer
